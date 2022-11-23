@@ -1,0 +1,45 @@
+<?php
+include "../config.php";
+
+$vendedor = $_POST['vendedor'];
+$cliente = $_POST['cliente'];
+$telefone = $_POST['telefone'];
+$cidade = $_POST['cidade'];
+$bairro = $_POST['bairro'];
+$endereco = $_POST['endereco'];
+$meio = $_POST['meio'];
+$codigo = $_POST['codigo'];
+$quantidade = $_POST['quantidade'];
+$venda = $_POST['venda'];
+$entrega = $_POST['entrega'];
+$valor = $_POST['valor'];
+$pagamento = $_POST['pagamento'];
+$parcela = $_POST['parcela'];
+$obs = $_POST['obs'];
+//$enviar = $_POST['enviar'];
+
+
+ 
+$query = "INSERT INTO cadastro(vendedor,cliente,telefone,cidade,bairro,endereco,meio,codigo,quantidade,venda,entrega,valor,pagamento) VALUES(:vendedor,:cliente,:telefone,:cidade,:bairro,:endereco,:meio,:codigo,:quantidade,:venda,:entrega,:valor,:pagamento)";
+$add = $conn->prepare($query);
+    
+       $add->bindParam(':vendedor',$vendedor );
+       $add->bindParam(':cliente', $cliente);
+       $add->bindParam(':telefone',$telefone);
+       $add->bindParam(':cidade',$cidade );
+       $add->bindParam(':bairro', $bairro);
+       $add->bindParam(':endereco', $endereco);
+       $add->bindParam(':meio', $meio);
+       $add->bindParam(':codigo', $codigo);
+       $add->bindParam(':quantidade', $quantidade);
+       $add->bindParam(':venda',$venda);
+       $add->bindParam(':entrega', $entrega);
+       $add->bindParam(':valor', $valor);
+       $add->bindParam(':pagamento', $pagamento);
+       $add->bindParam(':parcela', $parcela);
+       $add->bindParam(':obs', $obs);
+ 
+       $add->execute();
+       echo "ate aqui chegou";
+
+?>
