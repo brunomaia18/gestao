@@ -164,7 +164,20 @@ function TabelaVendas(){
     })
 }
 
-cadastroCliente()
+function dashboard(){
+    $(document).ready(function(){
+        $.ajax({
+            url:'../dashboard/grafico.php',
+            method:"get",
+            async:false,
+            success:function(resultado){
+                $("#info").html(resultado)
+            }
+        })
+    })
+}
+
+dashboard()
 
 </script>
 
