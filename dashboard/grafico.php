@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de valores </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
 </head>
 <body>
 <?php
@@ -21,6 +23,12 @@ $totalVendido = $conn->prepare("SELECT SUM(valor) as valor From cadastro  ");
 $totalVendido->execute();
 $valorSoma = $totalVendido->fetchObject();
 
+//--------------------FIM DO CODIGO-----------------------------------------------------//
+
+//---------------------NUMERO DE VENDAS CADSTRADA NA LOJA -----------------------------//
+$Nclientes1 = $conn->prepare("SELECT COUNT(cliente) as clientes From vendas");
+$Nclientes1->execute();
+$n1 = $Nclientes1->fetchObject();
 //--------------------FIM DO CODIGO-----------------------------------------------------//
 
 //----------------------------------------Primeiro Lugar do Bairro que Mais Vende---------------------------------------------------
@@ -81,8 +89,8 @@ while($valor3 = $quer_cont3->fetchObject()){
                                                             <div class="card border-3 border-top border-top-primary">
                                                                 <div class="card-body">
                                                                     <div class="d-inline-block">
-                                                                        <h5 class="text-muted">Pedidos</h5>
-                                                                        <h2 class="mb-0">loading...</h2>
+                                                                        <h5 class="text-muted">VENDAS</h5>
+                                                                        <h2 class="mb-0"><?php echo $n1->clientes ; ?></h2>
                                                                     </div>
                                                                     <div class="float-right icon-circle-medium  icon-box-lg  bg-success-light mt-1">
                                                                         <i class=" fas fa-cart-plus fa-fw fa-sm text-success"></i>
@@ -94,18 +102,17 @@ while($valor3 = $quer_cont3->fetchObject()){
 </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
+
   <script type="text/javascript">
   
   google.charts.load("current", {packages:['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ["Element", "Density", { role: "style" } ],
-        ['<?php echo $valor1->bairros1 ?>', <?php echo $valor1->qntvez1 ?>, "#b87333"],
-        ["<?php echo  $bairros2 ?>",  <?php echo $qntvez2 ?>, "gold"],
-        ["<?php echo  $bairros3 ?>",<?php echo  $qntvez3 ?>, "color: #e5e4e2"]
+        ["Element", "Vendido para:", { role: "style" } ],
+        ['<?php echo $valor1->bairros1 ?>', <?php echo $valor1->qntvez1 ?>, "red"],
+        ["<?php echo  $bairros2 ?>",  <?php echo $qntvez2 ?>, "Green"],
+        ["<?php echo  $bairros3 ?>",<?php echo  $qntvez3 ?>, "yellow"]
       ]);
 
       var view = new google.visualization.DataView(data);
