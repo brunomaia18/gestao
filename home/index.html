@@ -22,8 +22,8 @@
 
 <div class="sidebar">
     <ul>
-        <!--<a href="#" id="dashboard" onclick="grafic()"><li><i class="fa fa-tachometer"></i>Dashboard</li></a>-->
-        <a href="#" name='cadastro'id="cadastro" onclick="cadastroCliente()"><li><i class="fa fa-lightbulb-o"></i>Cadastros de clientes</li></a>
+        <a href="#" id="home" onclick="dashboard()"><li><i class="fa fa-tachometer"></i>Home</li></a>
+        <a href="#" name='cadastro'id="cadastro" onclick="cadastroCliente()"><li><i class="fa fa-tachometer"></i>Cadastros de clientes</li></a>
         <!--<a href="../cadastrovenda/index.html"><li><i class="fa fa-globe"></i></li>Cadastro Venda</a>-->
         <a href="#"  name ="vendasavulsas" id="vendasavulsas" onclick="vendasAvulsas()"><li><i class="fa fa-estoque"></i></li> Vendas Diárias</a>
         <a href="#", onclick="TabelaCadastro()"><li><i class="fa fa-wpforms"></i>Tabela de Cadastros</li></a>
@@ -122,23 +122,6 @@ function vendasAvulsas(){
     })
 }
 
-function grafic(){
-    $(document).ready(function(){
-        $.ajax({
-            url:'../dashboard/index.php',
-            method:'GET',
-            dataType:'hmtl',
-            success:function(resultado){
-                $('#info').html(resultado)
-                console.log("TO aqui olha depois da pagina")
-                
-            }
-        })
-        
-    })
-
-}
-
 function TabelaCadastro(){
     $(document).ready(function(){
         $.ajax({
@@ -164,7 +147,23 @@ function TabelaVendas(){
     })
 }
 
+function dashboard(){
+    $(document).ready(function(e){
+    
+        $.ajax({
+            url:'../dashboard/grafico.php',
+            method:"GET",
+            async:false,
+            success:function(resultado){
+                $("#info").html(resultado)
+            
+            }
+        })
+        return false
+    })
+}
 
+dashboard()
 
 </script>
 

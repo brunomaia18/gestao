@@ -1,8 +1,19 @@
-<?php 
+<?php
+include "../config.php";
+//----------------------------------------Primeiro Lugar do Bairro que Mais Vende---------------------------------------------------
+        $quer_cont1 = $conn->prepare("SELECT bairro as bairros1,COUNT(bairro) as qntvez1  FROM cadastro GROUP BY bairro HAVING COUNT(bairro) >= 1 ORDER BY count(bairro) DESC LIMIT 1");
+        $quer_cont1->execute();
+        $valor1 = $quer_cont1->fetchObject();
+//--------------------------------------------FIM---------------------------------------------------------------------------------
 
-$bairro1 = $_POST['bairros'];
+//-----------------------------------------Segundo Lugar Do Bairro que mais vende-------------------------------------------------
+$quer_cont2 = $conn->prepare("SELECT bairro as bairros2,COUNT(bairro) as qntvez2  FROM cadastro GROUP BY bairro HAVING COUNT(bairro) >= 1 ORDER BY count(bairro) DESC LIMIT 2");
+        $quer_cont2->execute();
+        $valor2 = $quer_cont2->fetchObject();
 
-?>
+//--------------------------------------------FIM---------------------------------------------------------------------------------
+     ?>
+
 
 
 <!DOCTYPE html>
@@ -17,15 +28,15 @@ $bairro1 = $_POST['bairros'];
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
   <script type="text/javascript">
-    google.charts.load("current", {packages:['corechart']});
+  
+  google.charts.load("current", {packages:['corechart']});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Density", { role: "style" } ],
-        ['<?php echo $bairro1 ?>', <?php echo $qntvez1 ?>, "#b87333"],
-        ["<?php echo $bairro2 ?>", <?php echo $qntvez2 ?>, "silver"],
-        ["<?php echo $bairro3 ?>", <?php echo $qntvez3 ?>, "gold"],
-        ["<?php echo $bairro4 ?>", <?php echo $qntvez4 ?>, "color: #e5e4e2"]
+        ['<?php echo $valor1->bairros1 ?>', <?php echo $valor1->qntvez1 ?>, "#b87333"],
+        ["arthur", 1, "gold"],
+        ["oi", 1, "color: #e5e4e2"]
       ]);
 
       var view = new google.visualization.DataView(data);
