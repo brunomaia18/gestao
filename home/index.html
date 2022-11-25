@@ -122,23 +122,6 @@ function vendasAvulsas(){
     })
 }
 
-function grafic(){
-    $(document).ready(function(){
-        $.ajax({
-            url:'../dashboard/index.php',
-            method:'GET',
-            dataType:'hmtl',
-            success:function(resultado){
-                $('#info').html(resultado)
-                console.log("TO aqui olha depois da pagina")
-                
-            }
-        })
-        
-    })
-
-}
-
 function TabelaCadastro(){
     $(document).ready(function(){
         $.ajax({
@@ -165,15 +148,18 @@ function TabelaVendas(){
 }
 
 function dashboard(){
-    $(document).ready(function(){
+    $(document).ready(function(e){
+    
         $.ajax({
             url:'../dashboard/grafico.php',
-            method:"get",
+            method:"GET",
             async:false,
             success:function(resultado){
                 $("#info").html(resultado)
+            
             }
         })
+        return false
     })
 }
 
