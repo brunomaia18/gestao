@@ -37,6 +37,15 @@ while($valor2 = $quer_cont2->fetchObject()){
     $qntvez2 = $valor2->qntvez2;
 };
 //--------------------------------------------FIM---------------------------------------------------------------------------------
+
+//-----------------------------------------TERCEIRO Lugar Do Bairro que mais vende-------------------------------------------------
+$quer_cont3 = $conn->prepare("SELECT bairro as bairros3,COUNT(bairro) as qntvez3  FROM cadastro GROUP BY bairro HAVING COUNT(bairro) >= 1 ORDER BY count(bairro) DESC LIMIT 3");
+$quer_cont3->execute();
+while($valor3 = $quer_cont3->fetchObject()){
+    $bairros3 = $valor3->bairros3;
+    $qntvez3 = $valor3->qntvez3;
+};
+//--------------------------------------------FIM---------------------------------------------------------------------------------
 ?>
 
 <div class="container text-center">
@@ -96,7 +105,7 @@ while($valor2 = $quer_cont2->fetchObject()){
         ["Element", "Density", { role: "style" } ],
         ['<?php echo $valor1->bairros1 ?>', <?php echo $valor1->qntvez1 ?>, "#b87333"],
         ["<?php echo  $bairros2 ?>",  <?php echo $qntvez2 ?>, "gold"],
-        ["oi", 1, "color: #e5e4e2"]
+        ["<?php echo  $bairros3 ?>",<?php echo  $qntvez3 ?>, "color: #e5e4e2"]
       ]);
 
       var view = new google.visualization.DataView(data);
@@ -108,7 +117,7 @@ while($valor2 = $quer_cont2->fetchObject()){
                        2]);
 
       var options = {
-        title: "Numeros de entregas em cada Bairro",
+        title: "Top 5 Bairros que mais pedem",
         width: 600,
         height: 400,
         bar: {groupWidth: "95%"},
