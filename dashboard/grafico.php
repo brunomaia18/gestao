@@ -38,11 +38,11 @@ $valor1 = $quer_cont1->fetchObject();
 //--------------------------------------------FIM---------------------------------------------------------------------------------
 
 //-----------------------------------------Segundo Lugar Do Bairro que mais vende-------------------------------------------------
-$quer_cont2 = $conn->prepare("SELECT bairro as bairros2,COUNT(bairro) as qntvez2  FROM cadastro GROUP BY bairro HAVING COUNT(bairro) >= 1 ORDER BY count(bairro) DESC LIMIT 2");
+$quer_cont2 = $conn->prepare("SELECT bairro AS bairros2,COUNT(bairro) AS qntvez  FROM cadastro GROUP BY bairro HAVING COUNT(bairro) >= 1 ORDER BY count(bairro) DESC LIMIT 2");
 $quer_cont2->execute();
 while($valor2 = $quer_cont2->fetchObject()){
     $bairros2 = $valor2->bairros2;
-    $qntvez2 = $valor2->qntvez2;
+    $qntvez2 = $valor2->qntvez;
 };
 //--------------------------------------------FIM---------------------------------------------------------------------------------
 
@@ -53,17 +53,59 @@ while($valor3 = $quer_cont3->fetchObject()){
     $bairros3 = $valor3->bairros3;
     $qntvez3 = $valor3->qntvez3;
 };
-//--------------------------------------------FIM---------------------------------------------------------------------------------
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
+
+
+//------------------------------------------1 Plataforma mais pedida---------------------------------------------------------------//
+$contmeio = $conn->prepare("SELECT meio as meios,COUNT(meio) as qntvez  FROM cadastro GROUP BY meios HAVING COUNT(meio) >= 1 ORDER BY count(meio) DESC LIMIT 1");
+$contmeio->execute();
+$VindaClientes = $contmeio->fetchObject();
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
+//------------------------------------------2 Plataforma mais pedida---------------------------------------------------------------//
+$contmeio2 = $conn->prepare("SELECT meio as meios,COUNT(meio) as qntvez  FROM cadastro GROUP BY meios HAVING COUNT(meio) >= 1 ORDER BY count(meio) DESC LIMIT 2");
+$contmeio2->execute();
+while($VindaClientes2 = $contmeio2->fetchObject()){
+    $meios2= $VindaClientes2->meios;
+    $qntvez2meios= $VindaClientes2->qntvez;
+}
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
+
+//------------------------------------------3 Plataforma mais pedida---------------------------------------------------------------//
+$contmeio3 = $conn->prepare("SELECT meio as meios,COUNT(meio) as qntvez  FROM cadastro GROUP BY meios HAVING COUNT(meio) >= 1 ORDER BY count(meio) DESC LIMIT 3");
+$contmeio3->execute();
+while($VindaClientes3 = $contmeio3->fetchObject()){
+    $meios3= $VindaClientes3->meios;
+    $qntvez3meios= $VindaClientes3->qntvez;
+}
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
+
+//------------------------------------------4 Plataforma mais pedida---------------------------------------------------------------//
+$contmeio4 = $conn->prepare("SELECT meio as meios,COUNT(meio) as qntvez  FROM cadastro GROUP BY meios HAVING COUNT(meio) >= 1 ORDER BY count(meio) DESC LIMIT 4");
+$contmeio4->execute();
+while($VindaClientes4 = $contmeio4->fetchObject()){
+    $meios4= $VindaClientes4->meios;
+    $qntvez4= $VindaClientes4->qntvez;
+}
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
+
+//------------------------------------------5 Plataforma mais pedida---------------------------------------------------------------//
+$contmeio5 = $conn->prepare("SELECT meio as meios,COUNT(meio) as qntvez  FROM cadastro GROUP BY meios HAVING COUNT(meio) >= 1 ORDER BY count(meio) DESC LIMIT 5");
+$contmeio5->execute();
+while($VindaClientes5 = $contmeio5->fetchObject()){
+    $meios5= $VindaClientes5->meios;
+    $qntvez5= $VindaClientes5->qntvez;
+}
+//--------------------------------------------FIM---------------------------------------------------------------------------------//
 ?>
 
-<div class="container text-center">
+<div class="container text-center ">
 <div class="row">
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="col-sm">
                         <div class="card border-3 border-top border-top-primary">
                             <div class="card-body">
                                 <div class="d-inline-block">
                                     <h5 class="text-muted">VALOR VENDIDO</h5>
-                                    <h2 class="mb-0"><?php echo "R$ ".$valorSoma->valor;  ; ?></h2>
+                                    <h2 class="mb-0"><?php echo "R$ ".$valorSoma->valor;   ?></h2>
                                     
                                 </div>
                                 <div class="float-right icon-circle-medium  icon-box-lg  bg-primary-light mt-1">
@@ -72,7 +114,7 @@ while($valor3 = $quer_cont3->fetchObject()){
                             </div>
                         </div>
                     </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="col-sm">
                                             <div class="card border-3 border-top border-top-primary">
                                                 <div class="card-body">
                                                     <div class="d-inline-block">
@@ -85,7 +127,7 @@ while($valor3 = $quer_cont3->fetchObject()){
                                                 </div>
                                             </div>
                                         </div>
-                                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                                        <div class="col-sm">
                                                             <div class="card border-3 border-top border-top-primary">
                                                                 <div class="card-body">
                                                                     <div class="d-inline-block">
@@ -107,7 +149,7 @@ while($valor3 = $quer_cont3->fetchObject()){
   
   google.charts.load("current", {packages:['corechart']});
     google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
+function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Vendido para:", { role: "style" } ],
         ['<?php echo $valor1->bairros1 ?>', <?php echo $valor1->qntvez1 ?>, "red"],
@@ -124,20 +166,46 @@ while($valor3 = $quer_cont3->fetchObject()){
                        2]);
 
       var options = {
-        title: "Top 5 Bairros que mais pedem",
+        title: "Top 3 Bairros que mais pedem",
         width: 600,
         height: 400,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
+        
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
       chart.draw(view, options);
-  }
+}
+  //----------------------------Plataforma Mais pedida------------------------------------------------
+  google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawPie);
+      function drawPie() {
+        var pie = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['<?php echo $VindaClientes->meios;?>', <?php echo $VindaClientes->qntvez;?>],
+          ['<?php echo $meios2 ?>', <?php echo $qntvez2meios ?>],
+          ['<?php echo $meios3 ?>',  <?php echo $qntvez3meios ?>],
+          ['<?php echo $meios4 ?>', <?php echo $qntvez4 ?>],
+          ['<?php echo $meios5 ?>',    <?php echo $qntvez5 ?>]
+        ]);
 
- 
+        var options = {
+          title: 'Por onde os clientes mais vem',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(pie, options);
+    }
   </script>
-<div id="columnchart_values" style="width: 900px; height: 300px;"></div>
+<div class="container"  style="position: relative; right: 75px;  ">
+    <div class="row">
+<div id="columnchart_values" class="col-sm" style="width: 450px; height: 300px;"></div>
+<br>
+<div id="piechart_3d" class="col-sm" style="width: 700px; height: 400px; position: relative; top:50px; "></div>
 
+</div>
+</div>
 
 </body>
 </html>
