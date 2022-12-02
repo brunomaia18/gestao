@@ -19,7 +19,7 @@ Senha: 123
 <br>
 <br>
 
-<p> Tela Cadastro Cliente </p>
+<h1> Tela Cadastro Cliente </h1>
 <img width="470" src = "https://github.com/brunomaia18/2Trabalho_valendo2.5/blob/main/img/2tela.jpg">
 <br>
 <br>
